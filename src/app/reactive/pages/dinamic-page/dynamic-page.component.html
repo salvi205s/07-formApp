@@ -1,0 +1,101 @@
+<h2>Reactivos: <small> Dinámicos </small></h2>
+<hr />
+
+<!-- Formulario principal -->
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+  <!-- Campo de Nombre -->
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Nombre</label>
+    <div class="col-sm-9">
+      <input
+        class="form-control"
+        formControlName="name"
+        placeholder="Nombre de la persona"
+      />
+      <!-- Mostrar mensaje de error si el campo es inválido -->
+      <span *ngIf="isValidField('name')" class="form-text text-danger">
+        {{ getFieldError("name") }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Sección para agregar favoritos -->
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Agregar</label>
+    <div class="col-sm-9">
+      <!-- Input para agregar favorito -->
+      <div class="input-group">
+        <input
+          class="form-control"
+          [formControl]="newFavorite"
+          placeholder="Agregar favorito"
+        />
+
+        <!-- Botón para agregar favorito -->
+        <button
+          (click)="onAddToFavorites()"
+          class="btn btn-outline-primary"
+          type="button"
+        >
+          Agregar favorito
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de Juegos Favoritos -->
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Favoritos</label>
+    <div class="col-sm-9" formArrayName="favoriteGames">
+      <!-- Iteración sobre los favoritos existentes -->
+      <div
+        class="mb-1"
+        *ngFor="let favorite of favoriteGames.controls; let i = index"
+      >
+        <!-- Input para cada juego favorito -->
+        <div class="input-group">
+          <input [formControlName]="i" class="form-control" />
+
+          <!-- Botón para eliminar juego favorito -->
+          <button
+            (click)="onDeleteFavorite(i)"
+            class="btn btn-outline-danger"
+            type="button"
+          >
+            Eliminar
+          </button>
+        </div>
+
+        <!-- Mostrar mensaje de error si el campo es inválido -->
+        <span
+          *ngIf="isValidFieldInArray(favoriteGames, i)"
+          class="form-text text-danger"
+        >
+          Este campo es requerido
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón de Guardar -->
+  <div class="row">
+    <div class="col-sm-12">
+      <button type="submit" class="btn btn-primary float-end">Guardar</button>
+    </div>
+  </div>
+</form>
+
+<!-- Muestra el estado 'valid' del formulario -->
+<span>Valid</span>
+<pre>{{ myForm.valid | json }}</pre>
+<br />
+
+<!-- Muestra el valor actual del formulario -->
+<span>Value</span>
+<pre>{{ myForm.value | json }}</pre>
+<br />
+
+<!-- Muestra el estado 'valid' del nuevo favorito -->
+<span>Agregar Juego</span>
+<pre>{{ newFavorite.valid | json }}</pre>
+<pre>{{ newFavorite.value | json }}</pre>

@@ -1,0 +1,112 @@
+<!-- Título y separador -->
+<h2>Reactivos: Básicos</h2>
+<hr />
+
+<!-- Contenedor principal -->
+<div class="row">
+  <div class="col">
+    <!-- Formulario -->
+    <form [formGroup]="myForm" (ngSubmit)="onSave()" autocomplete="off">
+      <!-- Campo de producto -->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Producto</label>
+        <div class="col-sm-9">
+          <!-- Input para el nombre del producto -->
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Nombre del producto"
+          />
+
+          <!-- Mensaje de error para el campo del nombre -->
+          <span *ngIf="isValidField('name')" class="form-text text-danger">
+            {{ getFieldError("name") }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Campo de precio -->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Precio</label>
+        <div class="col-sm-9">
+          <!-- Input para el precio del producto -->
+          <input
+            type="number"
+            class="form-control"
+            formControlName="price"
+            placeholder="Precio del producto"
+          />
+
+          <!-- Mensaje de error para el campo de precio -->
+          <span *ngIf="isValidField('price')" class="form-text text-danger">
+            El precio debe de ser 0 o mayor.
+          </span>
+        </div>
+      </div>
+
+      <!-- Campo de existencias -->
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Existencias</label>
+        <div class="col-sm-9">
+          <!-- Input para las existencias del producto -->
+          <input
+            type="number"
+            class="form-control"
+            formControlName="inStorage"
+            placeholder="Existencias del producto"
+          />
+
+          <!-- Mensaje de error para el campo de existencias -->
+          <span *ngIf="isValidField('inStorage')" class="form-text text-danger">
+            Las existencias deben de ser 0 o mayor
+          </span>
+        </div>
+      </div>
+
+      <!-- Botón de guardar -->
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-primary float-end">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Sección para mostrar información sobre el estado del formulario -->
+<div class="row">
+  <div class="col">
+    <!-- Estado del formulario -->
+    <span>Valid</span>
+    <pre>{{ myForm.valid | json }}</pre>
+
+    <span>Pristine</span>
+    <pre>{{ myForm.pristine | json }}</pre>
+
+    <span>Touched</span>
+    <pre>{{ myForm.touched | json }}</pre>
+
+    <!-- Valor del formulario -->
+    <span>Value</span>
+    <pre>{{ myForm.value | json }}</pre>
+
+    <!-- Valor del campo 'price' -->
+    <span>Precio</span>
+    <pre>{{ myForm.controls["price"].value | json }}</pre>
+
+    <!-- Errores del campo 'price' -->
+    <span>Precio - Errors</span>
+    <pre>{{ myForm.controls["price"].errors | json }}</pre>
+
+    <!-- Valor del campo 'name' -->
+    <span>Producto</span>
+    <pre>{{ myForm.controls["name"].value | json }}</pre>
+
+    <!-- Errores del campo 'name' -->
+    <span>Producto - Errors</span>
+    <pre>{{ myForm.controls["name"].errors | json }}</pre>
+  </div>
+</div>
