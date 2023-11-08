@@ -3,19 +3,23 @@
 
 <div class="row">
   <div class="col">
-    <form autocomplete="off">
+    <!-- Inicio del formulario -->
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <!-- Nombre -->
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Nombre</label>
         <div class="col-sm-9">
+          <!-- Campo de entrada para el nombre -->
           <input
             type="text"
             class="form-control"
+            formControlName="name"
             placeholder="Nombre del usuario"
           />
 
-          <span class="form-text text-danger">
-            Debe de ser en formato de nombre y apellido
+          <!-- Mensaje de error para el nombre -->
+          <span *ngIf="isValidField('name')" class="form-text text-danger">
+            Debe ser en formato de nombre y apellido
           </span>
         </div>
       </div>
@@ -24,13 +28,17 @@
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Email</label>
         <div class="col-sm-9">
+          <!-- Campo de entrada para el correo electrónico -->
           <input
             type="email"
             class="form-control"
+            formControlName="email"
             placeholder="Email del usuario"
           />
-          <span class="form-text text-danger">
-            mensaje de error del email
+
+          <!-- Mensaje de error para el correo electrónico -->
+          <span *ngIf="isValidField('email')" class="form-text text-danger">
+            Mensaje de error del email
           </span>
         </div>
       </div>
@@ -39,12 +47,16 @@
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Username</label>
         <div class="col-sm-9">
+          <!-- Campo de entrada para el nombre de usuario -->
           <input
             type="text"
             class="form-control"
+            formControlName="username"
             placeholder="Nombre código del usuario"
           />
-          <span class="form-text text-danger">
+
+          <!-- Mensaje de error para el nombre de usuario -->
+          <span *ngIf="isValidField('username')" class="form-text text-danger">
             El username no puede ser Strider
           </span>
         </div>
@@ -54,14 +66,17 @@
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-9">
+          <!-- Campo de entrada para la contraseña -->
           <input
             type="password"
             class="form-control"
+            formControlName="password"
             placeholder="Password de su cuenta"
           />
 
-          <span class="form-text text-danger">
-            La contraseña debe de ser mayor de 6 caracteres.
+          <!-- Mensaje de error para la contraseña -->
+          <span *ngIf="isValidField('password')" class="form-text text-danger">
+            La contraseña debe ser mayor de 6 caracteres.
           </span>
         </div>
       </div>
@@ -70,44 +85,54 @@
       <div class="row mb-3">
         <label class="col-sm-3 col-form-label">Confirmar</label>
         <div class="col-sm-9">
+          <!-- Campo de entrada para confirmar la contraseña -->
           <input
             type="password"
             class="form-control"
+            formControlName="password2"
             placeholder="Confirmar la contraseña"
           />
 
-          <span class="form-text text-danger">
-            Las contraseñas deben de ser iguales
+          <!-- Mensaje de error para la confirmación de la contraseña -->
+          <span *ngIf="isValidField('password2')" class="form-text text-danger">
+            Las contraseñas deben ser iguales
           </span>
         </div>
       </div>
 
+      <!-- Botón de enviar -->
       <div class="row">
         <div class="col">
           <button class="btn btn-primary float-end" type="submit">Crear</button>
         </div>
       </div>
     </form>
+    <!-- Fin del formulario -->
   </div>
 </div>
 
-<h2>Form Valid:</h2>
-<h2>Form Status:</h2>
-<h2>Form Pending:</h2>
+<!-- Información sobre el formulario -->
+<h2>Form Valid: {{ myForm.valid }}</h2>
+<h2>Form Status: {{ myForm.status }}</h2>
+<h2>Form Pending: {{ myForm.pending }}</h2>
+
+<!-- Errores generales del formulario -->
 <h2>Form errors</h2>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.errors | json }}</pre>
+
+<!-- Errores específicos de cada campo -->
 
 <h5>Nombre</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["name"].errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["email"].errors | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["username"].errors | json }}</pre>
 
 <h5>Password</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.value.password | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["password2"].errors | json }}</pre>
